@@ -1,2 +1,2 @@
 # FakeNewsDetection
-It is modelto predict fake and real news
+It is model to predict fake and real news
