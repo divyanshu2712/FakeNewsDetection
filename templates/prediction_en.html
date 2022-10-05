@@ -12,16 +12,16 @@
 <body>
     <header class="text-gray-600 body-font">
         <div class="container mx-auto flex flex-wrap p-3 flex-col md:flex-row items-center">
-            <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" href="index.html">
+            <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" href="/">
                 <img src="/static/information.png" alt="">
                 <span class="ml-3 text-xl">News Corp.</span>
             </a>
             <nav
                 class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center">
-                <a class="mr-5 hover:text-gray-900" href="index.html">Home</a>
-                <a class="mr-5 hover:text-gray-900" href="hindi.html">Hindi News</a>
-                <a class="mr-5 hover:text-gray-900" href="aboutus.html">About Us</a>
-                <a class="mr-5 hover:text-gray-900" href="contactus.html">Contact Us</a>
+                <a class="mr-5 hover:text-gray-900" href="/">Home</a>
+                <a class="mr-5 hover:text-gray-900" href="/hindi">Hindi News</a>
+                <a class="mr-5 hover:text-gray-900" href="/aboutus">About Us</a>
+                <a class="mr-5 hover:text-gray-900" href="/contactus">Contact Us</a>
             </nav>
         </div>
     </header>
@@ -32,16 +32,23 @@
             <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Fake News Predictor (English News)</h1>
             <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Put the news in the given feild and click the submit button</p>
             <br>
-            <p style="font-size: larger;color: rgb(241, 68, 68); ">
-                <b>{{prediction_text_eng}}</b>
+            <p>
+                {% if prediction_text_eng=='None'  %}
+                <b style="font-size: x-large;color: rgb(241, 68, 68); ">**Please Enter Any News**</b> 
+                
+                {% elif prediction_text_eng=='News is Fake'  %}
+                <b style="font-size:x-large;color: rgb(241, 68, 68); ">{{prediction_text_eng}}</b>                    
+                {% else %}
+                    <b style="font-size: x-large;color: rgb(6, 201, 42); ">{{prediction_text_eng}}</b>                    
+                {% endif %}
             </p>
           </div>
-          <form action="/prediction_en.html" method="post">
+          <form action="/prediction_en" method="post">
             <div class="mb-3">
               <label for="predict_eng" class="form-label">Enter News</label>
               <input type="text" class="form-control" id="news" name="news_eng"  aria-describedby="predictioneng">
             </div>
-            <button class="flex mt-5 mx-auto text-white bg-purple-500 border-0 py-2 px-8 focus:outline-none hover:bg-purple-600 rounded text-lg">Submit</button>
+            <button class="flex mt-5 mx-auto text-white bg-blue-600 border-0 py-2 px-8 focus:outline-none hover:bg-blue-800 rounded text-lg">Submit</button>
           </form>
         </div>
       </section>
@@ -49,7 +56,7 @@
       <br><br><br>
       <footer class="text-gray-600 body-font">
         <div class="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col">
-            <a class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900" href="index.html">
+            <a class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900" href="/">
                 <img src="/static/information.png" alt="">
                 <span class="ml-3 text-xl">News Corp.</span>
             </a>
