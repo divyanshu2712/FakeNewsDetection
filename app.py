@@ -24,6 +24,21 @@ class contactus(db.Model):
     message=db.Column(db.String(1000),nullable=False)
     time=db.Column(db.DateTime,default=datetime.utcnow)
 
+@app.route('/create',methods=['GET','POST'])
+def register():
+    if request.method=='POST':
+        username=request.form['username']
+        password=request.form['password']
+        user = admin.query.filter_by(username=username).first()
+        if user is not None:
+            return render_template('create.html',result='false')
+        new=admin(username=username,password=password)
+        db.session.add(new)
+        db.session.commit()
+        return render_template('create.html',result='true')
+    else:
+        return render_template('create.html')
+
 @app.route("/admin",methods=["GET","POST"])
 def admin2():
     if request.method=="POST":

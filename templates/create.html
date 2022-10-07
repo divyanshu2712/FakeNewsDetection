@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fake News Detector</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="shortcut icon" href="/static/icons8-wrong-flaticons-lineal-color-16.png" type="image/x-icon">
+</head>
+<body style="background-image: url(/static/bgadmin.jpg);background-repeat: no-repeat; ">
+    <section><div style="width: 500px;
+    height: 350px;
+    background-color: rgb(231, 231, 231);
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto; border-radius: 30px; border-color: black; border-width: 2px;">
+    <h1 style="font-size:xx-large;color: black;display: flex;justify-content: center; position: relative;top: 1rem;font-weight: bold;color: brown; ">Register Admin</h1>
+    <br>
+    <form action="/create" method="post">
+        <br>
+        <label for="username" style="position: absolute; top: 6rem; left: 4rem;font-size: large;">Create Username :</label>
+        <input type="text" minlength="8" maxlength="20" required name="username" style="position: absolute; top: 6rem; left: 14rem; width: 250px;height: 30px; border-radius: 8px;border-color: rgb(120, 118, 118);border-width: 1px;text-align: center;">
+        <br>
+        <label for="username" style="position: absolute; top: 9rem; left: 4rem;font-size: large;">Create Password :</label>
+        <input type="password" minlength="8" maxlength="20" required name="password" style="position: absolute; top: 9rem; left: 14rem; width: 250px;height: 30px; border-radius: 8px;border-color: rgb(120, 118, 118);border-width: 1px;text-align: center;">
+        <br><br><br>
+        <div style="display: flex; justify-content: center;">
+        <div style="width: 80px;height: 40px; background-color: rgb(185, 243, 207);border-radius: 8px;display: flex;justify-content: center;font-weight: bold;color: red;border-color: black;border-width: 1px; "><button>Register</button></div></div>
+    </form>
+        <div style="display:flex;justify-content: center;">
+            {% if result == 'false' %}
+                <div style="font-weight:bold;font-size: large;color: red;"><p><b>Admin Already Exist</b></p></div>
+            {% elif result=='true' %}
+                <div style="font-weight:bold;font-size: large;color: green;margin-top: 0.2rem;">
+                    <p>
+                        <b>
+                            Admin Registered
+                        </b>
+                    </p>
+                    <div style="display:flex;justify-content: center;margin-top: 0.5rem;"><a href="/admin"><button style="width: 106px; height:37px;border-radius: 10px;background-color:cornsilk;">Login now</button></a></div>
+                </div>                
+            {% endif %}
+        </div>
+
+    </div></section>
+</body>
+
+</html>
