@@ -33,10 +33,7 @@
             <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Put the news in the given feild and click the submit button</p>
             <br>
             <p>
-                {% if prediction_text_eng=='None'  %}
-                <b style="font-size: x-large;color: rgb(241, 68, 68); ">**Please Enter Any News**</b> 
-                
-                {% elif prediction_text_eng=='News is Fake'  %}
+                {% if prediction_text_eng=='News is Fake'  %}
                 <b style="font-size:x-large;color: rgb(241, 68, 68); ">{{prediction_text_eng}}</b>                    
                 {% else %}
                     <b style="font-size: x-large;color: rgb(6, 201, 42); ">{{prediction_text_eng}}</b>                    
@@ -46,7 +43,7 @@
           <form action="/prediction_en" method="post">
             <div class="mb-3">
               <label for="predict_eng" class="form-label">Enter News</label>
-              <input type="text" class="form-control" id="news" name="news_eng"  aria-describedby="predictioneng">
+              <input type="text" required class="form-control" id="news" name="news_eng"  aria-describedby="predictioneng">
             </div>
             <button class="flex mt-5 mx-auto text-white bg-blue-600 border-0 py-2 px-8 focus:outline-none hover:bg-blue-800 rounded text-lg">Submit</button>
           </form>

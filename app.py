@@ -1,4 +1,3 @@
-import email
 from flask import Flask, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -12,8 +11,11 @@ vector=joblib.load('vector.sav')
 app = Flask(__name__) # app name given to procfile in heroku
 app.config['SQLALCHEMY_DATABASE_URI']="sqlite:///db.sqlite"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
-
 db=SQLAlchemy(app)
+
+class admin(db.Model):
+    username=db.Column(db.String(20),primary_key=True,nullable=False)
+    password=db.Column(db.String(20),nullable=False)
 
 class contactus(db.Model):
     Sno=db.Column(db.Integer,primary_key=True)
@@ -21,8 +23,23 @@ class contactus(db.Model):
     email=db.Column(db.String(30),nullable=False)
     message=db.Column(db.String(1000),nullable=False)
     time=db.Column(db.DateTime,default=datetime.utcnow)
-with app.app_context():
-    db.create_all()    
+
+@app.route("/admin",methods=["GET","POST"])
+def admin2():
+    if request.method=="POST":
+        username=request.form['username']
+        password=request.form['password']
+        user = admin.query.filter_by(username=username).first()
+        if user is None:
+            return render_template('admin.html',answer='None')
+        elif user.password == password:
+            all=contactus.query.all()
+            return render_template('database.html',alluser=all)
+        else:
+            return render_template('admin.html',answer='None')
+    else:
+        return render_template('admin.html')
+
 
 @app.route("/prediction_hn")
 def pre_hn():
@@ -32,8 +49,6 @@ def pre_hn():
 def pre_en():
     if request.method == "POST":
         news_en= str(request.form["news_eng"])
-        if news_en=="":
-            return render_template('prediction_en.html',prediction_text_eng=f"None")
         predict=model.predict(vector.transform([news_en]))
         return render_template('prediction_en.html',prediction_text_eng=f"News is {predict[0]}")
     else:
@@ -45,8 +60,6 @@ def contact():
         name=request.form['name']
         email=request.form['email']
         message=request.form['message']
-        if name=="" or email=="" or message=="":
-            return render_template('contactus.html',submit_text=f"Incomplete")
         contact_us=contactus(name=name,email=email,message=message)
         db.session.add(contact_us)
         db.session.commit()

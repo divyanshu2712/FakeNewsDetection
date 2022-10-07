@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fake News Detector</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="shortcut icon" href="/static/icons8-wrong-flaticons-lineal-color-16.png" type="image/x-icon">
+</head>
+<body style="background-image: url(/static/bgadmin.jpg);background-repeat: no-repeat; ">
+    <section><div style="width: 500px;
+    height: 300px;
+    background-color: rgb(231, 231, 231);
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto; border-radius: 30px; border-color: black; border-width: 2px;">
+    <h1 style="font-size:xx-large;color: black;display: flex;justify-content: center; position: relative;top: 1rem;font-weight: bold;color: brown; ">Admin Login</h1>
+    <br>
+    <form action="/admin" method="post">
+        <br>
+        <label for="username" style="position: absolute; top: 6rem; left: 4rem;font-size: large;">Admin :</label>
+        <input type="text" minlength="8" maxlength="20" required name="username" style="position: absolute; top: 6rem; left: 8rem; width: 250px;height: 30px; border-radius: 8px;border-color: rgb(120, 118, 118);border-width: 1px;text-align: center;">
+        <br>
+        <label for="username" style="position: absolute; top: 9rem; left: 2.5rem;font-size: large;">Password :</label>
+        <input type="password" minlength="8" maxlength="20" required name="password" style="position: absolute; top: 9rem; left: 8rem; width: 250px;height: 30px; border-radius: 8px;border-color: rgb(120, 118, 118);border-width: 1px;text-align: center;">
+        <br><br><br>
+        <div style="display: flex; justify-content: center;">
+        <div style="width: 80px;height: 40px; background-color: rgb(185, 243, 207);border-radius: 8px;display: flex;justify-content: center;font-weight: bold;color: red;border-color: black;border-width: 1px; "><button>Submit</button></div></div>
+        <br>
+        <div style="display:flex;justify-content: center;">
+            {% if answer == 'None' %}
+                <div style="font-weight:bold;font-size: large;color: red;"><p><b>Not Authorized To Access</b></p></div>                
+            {% endif %}
+        </div>
+    </form>
+    </div></section>
+</body>
+
+</html>
