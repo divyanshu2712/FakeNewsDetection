@@ -1,9 +1,11 @@
 # importing required packages
-from flask import Flask, request, render_template
+from os import abort
+from flask import Flask, request, render_template,abort
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from security import password_2
 import joblib
+visited=False
 #For english news loading model and vector
 model=joblib.load('model.sav')
 vector=joblib.load('vector.sav')
@@ -32,23 +34,28 @@ class contactus(db.Model):
 # Designing Backend for registration of admin
 @app.route('/create',methods=['GET','POST'])
 def register():
-    if request.method=='POST':
-        username=request.form['username']
-        password_1=request.form['password']
-        user = admin.query.filter_by(username=username).first()
-        if user is not None:
-            return render_template('create.html',result='false')
-        if not password_2(password_1):
-            return render_template('create.html',result='lesssecure',user_name=username)
-        new=admin(username=username,password=password_1)
-        db.session.add(new)
-        db.session.commit()
-        return render_template('create.html',result='true')
+    if visited:
+        if request.method=='POST':
+            username=request.form['username']
+            password_1=request.form['password']
+            user = admin.query.filter_by(username=username).first()
+            if user is not None:
+                return render_template('create.html',result='false')
+            if not password_2(password_1):
+                return render_template('create.html',result='lesssecure',user_name=username)
+            new=admin(username=username,password=password_1)
+            db.session.add(new)
+            db.session.commit()
+            return render_template('create.html',result='true')
+        else:
+            return render_template('create.html')
     else:
-        return render_template('create.html')
+        abort(404)
 # Designing Backend for login of admin
 @app.route("/admin",methods=["GET","POST"])
 def admin2():
+    global visited
+    visited=False
     if request.method=="POST":
         username=request.form['username']
         password=request.form['password']
@@ -57,6 +64,7 @@ def admin2():
             return render_template('admin.html',answer='None')
         elif user.password == password:
             all=contactus.query.all()
+            visited=True
             return render_template('database.html',alluser=all)
         else:
             return render_template('admin.html',answer='None')
@@ -65,6 +73,8 @@ def admin2():
 # Designing Backend for  hindi news prediction
 @app.route("/prediction_hn",methods=['GET','POST'])
 def pre_hn():
+    global visited
+    visited=False
     if request.method=="POST":
         news_hn=str(request.form['news_hn'])
         predict_hn=model_hn.predict(vector_hn.transform([news_hn]))
@@ -74,6 +84,8 @@ def pre_hn():
 # Designing Backend for english news prediction
 @app.route("/prediction_en",methods=['GET','POST'])
 def pre_en():
+    global visited
+    visited=False
     if request.method == "POST":
         news_en= str(request.form["news_eng"])
         predict=model.predict(vector.transform([news_en]))
@@ -83,6 +95,8 @@ def pre_en():
 # Designing Backend for storing value of feedback in database
 @app.route("/contactus",methods=['GET','POST'])
 def contact():
+    global visited
+    visited=False    
     if request.method=='POST':
         name=request.form['name']
         email=request.form['email']
@@ -96,14 +110,20 @@ def contact():
 # Writing aboutus page accessing code 
 @app.route("/aboutus")
 def aboutus():
+    global visited
+    visited=False
     return render_template('aboutus.html')
 # Writing hindi website page accessing code 
 @app.route("/hindi")
 def hindi():
+    global visited
+    visited=False
     return render_template('hindi.html')
 # Writing index(home) page accessing code 
 @app.route("/")
 def home():
+    global visited
+    visited=False
     return render_template('index.html')
 # Running the Main app
 if __name__ == "__main__":
