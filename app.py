@@ -1,5 +1,4 @@
 # importing required packages
-from os import abort
 from flask import Flask, request, render_template,abort
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
@@ -34,6 +33,7 @@ class contactus(db.Model):
 # Designing Backend for registration of admin
 @app.route('/create',methods=['GET','POST'])
 def register():
+    global visited
     if visited:
         if request.method=='POST':
             username=request.form['username']
