@@ -26,5 +26,5 @@ SQLAlchemy==1.4.41
 threadpoolctl==3.1.0
 tqdm==4.64.1
 tzdata==2023.3
-Werkzeug==2.3.1
+Werkzeug==2.2.3
 zope.interface==5.4.0
